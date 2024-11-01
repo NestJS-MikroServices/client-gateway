@@ -10,8 +10,9 @@ import {
   Query
 } from '@nestjs/common';
 import {PRODUCT_SERVICE} from "../config";
-import {ClientProxy} from '@nestjs/microservices';
-import {PaginationDto} from '../common';
+import {ClientProxy, RpcException} from '@nestjs/microservices';
+import {PaginationDto, RpcCustomExceptionFilter} from '../common';
+import {firstValueFrom} from 'rxjs';
 
 
 @Controller('products')
@@ -32,8 +33,15 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findProduct(@Param('id') id: number){
-    return "PRODUCT OK"
+  async findProduct(@Param('id') id: number){
+    try {
+      const product= await firstValueFrom(
+        this.productsClient.send({ cmd: 'find_product'}, { id })
+      );
+      return product;
+    } catch (e) {
+      throw new RpcException(e);
+    }
   }
 
   @Patch(':id')
