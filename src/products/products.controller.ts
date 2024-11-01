@@ -3,22 +3,19 @@ import {
   Controller,
   Delete,
   Get,
-  Inject, InternalServerErrorException,
-  Param, ParseIntPipe,
+  Inject,
+  Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query
 } from '@nestjs/common';
 import {PRODUCT_SERVICE} from "../config";
 import {ClientProxy, RpcException} from '@nestjs/microservices';
-import {PaginationDto, RpcCustomExceptionFilter} from '../common';
-import {catchError, firstValueFrom, lastValueFrom, Observable, tap} from 'rxjs';
-import {CreateProductDto} from "./dto/create-product.dto";
-import {UpdateProductDto} from "./dto/update-product.dto";
-import {any} from "joi";
-import * as console from "console";
-import {response} from "express";
-
+import {PaginationDto} from '../common';
+import {catchError, firstValueFrom, lastValueFrom} from 'rxjs';
+import {CreateProductDto} from './dto/create-product.dto';
+import {UpdateProductDto} from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -68,7 +65,11 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  removeProduct (){
-    return "PRODUCT DESTROYED"
+  removeProduct (@Param('id', ParseIntPipe ) id: number){
+    return this.productsClient.send({cmd: 'eliminate_product'}, {id}).pipe(
+      catchError((e) => {
+        throw new RpcException(e);
+      })
+    );
   }
 }
