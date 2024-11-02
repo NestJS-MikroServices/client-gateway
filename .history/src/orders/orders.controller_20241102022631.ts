@@ -29,10 +29,17 @@ export class OrdersController {
   }*/
     
   @Get(':id')
-  findOrder(@Param('id') id: number) {
-    return this.ordersClient.send('findOneOrder', { id })
-  }
-  
+  async findOrder(@Param('id') id: number) {
+    try {
+      const order = await firstValueFrom(
+        this.ordersClient.send('findOneOrder', { id })
+      );
+      return order;
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }  
+
 /*
   @Get(':id')
   async findOrder(@Param('id') id: number) {

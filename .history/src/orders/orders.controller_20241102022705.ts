@@ -30,9 +30,14 @@ export class OrdersController {
     
   @Get(':id')
   findOrder(@Param('id') id: number) {
-    return this.ordersClient.send('findOneOrder', { id })
-  }
-  
+    return  this.ordersClient.send('findOneOrder', { id })
+      );
+      return order;
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }  
+
 /*
   @Get(':id')
   async findOrder(@Param('id') id: number) {

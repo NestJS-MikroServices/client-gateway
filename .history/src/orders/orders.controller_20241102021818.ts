@@ -18,7 +18,7 @@ export class OrdersController {
 
   @Get()
   findAllOrders(){
-    return this.ordersClient.send('findAllOrders', {});
+    return this.ordersClient.send('finadAllOrders', {});
   }
 
 /*
@@ -28,11 +28,6 @@ export class OrdersController {
     return this.ordersClient.send('findAllOrders', { page, limit });
   }*/
     
-  @Get(':id')
-  findOrder(@Param('id') id: number) {
-    return this.ordersClient.send('findOneOrder', { id })
-  }
-  
 /*
   @Get(':id')
   async findOrder(@Param('id') id: number) {

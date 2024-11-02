@@ -23,7 +23,7 @@ const envsSchema = joi.object(
 const { error, value } = envsSchema.validate(process.env);
 
 if (error) {
-  throw new Error(`ERROR GATEWAY: ${error.message}`);
+  throw new Error(`GATEWAY VALIDATION ERROR GATEWAY: ${error.message}`);
 }
 
 const envVars: EnvVars = value;

@@ -15,24 +15,12 @@ export class OrdersController {
   createOrder( @Body() createOrderDto: CreateOrderDto) {
     return this.ordersClient.send('createOrder', createOrderDto);
   }
-
-  @Get()
-  findAllOrders(){
-    return this.ordersClient.send('findAllOrders', {});
-  }
-
 /*
   @Get()
   findAllOrders( @Query() paginationDto: PaginationDto) {
     const { page, limit } = paginationDto;
     return this.ordersClient.send('findAllOrders', { page, limit });
   }*/
-    
-  @Get(':id')
-  findOrder(@Param('id') id: number) {
-    return this.ordersClient.send('findOneOrder', { id })
-  }
-  
 /*
   @Get(':id')
   async findOrder(@Param('id') id: number) {
