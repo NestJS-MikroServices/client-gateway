@@ -37,7 +37,7 @@ export class ProductsController {
   @Get(':id')
   async findProduct(@Param('id') id: number){
     try {
-      const product = await firstValueFrom(
+      const product= await firstValueFrom(
         this.productsClient.send({cmd: 'find_product'}, { id })
       );
       return product;

@@ -15,15 +15,15 @@ const envsSchema = joi.object(
     PORT: joi.number().required(),
     PRODUCTS_MICROSERVICES_HOST: joi.string().required(),
     PRODUCTS_MICROSERVICES_PORT: joi.number().required(),
-    ORDERS_MICROSERVICES_HOST: joi.string().required(),
-    ORDERS_MICROSERVICES_PORT: joi.number().required(),
+    ORDERS_MICROSERVICE_HOST: joi.string().required(),
+    ORDERS_MICROSERVICE_HOST: joi.number().required(),
   })
   .unknown(true);
 
 const { error, value } = envsSchema.validate(process.env);
 
 if (error) {
-  throw new Error(`CONFIG VALIDATION MICROSERVICES ERROR: ${error.message}`);
+  throw new Error(`Config Validation ERROR: ${error.message}`);
 }
 
 const envVars: EnvVars = value;
@@ -31,7 +31,5 @@ const envVars: EnvVars = value;
 export const envs = {
   port: envVars.PORT,
   productsMSHost: envVars.PRODUCTS_MICROSERVICES_HOST,
-  productsMSPort: envVars.PRODUCTS_MICROSERVICES_PORT,
-  ordersMSHost: envVars.ORDERS_MICROSERVICES_HOST,
-  ordersMSPort: envVars.ORDERS_MICROSERVICES_PORT,
+  productsMSPort: envVars.PRODUCTS_MICROSERVICES_PORT
 }

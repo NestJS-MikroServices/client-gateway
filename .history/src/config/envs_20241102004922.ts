@@ -23,7 +23,7 @@ const envsSchema = joi.object(
 const { error, value } = envsSchema.validate(process.env);
 
 if (error) {
-  throw new Error(`CONFIG VALIDATION MICROSERVICES ERROR: ${error.message}`);
+  throw new Error(`CONGIG VALIDATConfig Validation ERROR: ${error.message}`);
 }
 
 const envVars: EnvVars = value;
