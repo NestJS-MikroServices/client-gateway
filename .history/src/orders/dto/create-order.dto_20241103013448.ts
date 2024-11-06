@@ -1,5 +1,6 @@
+import { OrderStatus } from '@prisma/client';
 import { IsBoolean, IsEnum, IsNumber, IsOptional, IsPositive } from "class-validator";
-import { OrderStatus, OrderStatusList } from "../enum/order.enum";
+import { OrderStatusList } from "../enum/order.enum";
 
 export class CreateOrderDto {
 

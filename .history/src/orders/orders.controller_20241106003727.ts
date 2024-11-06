@@ -1,4 +1,4 @@
-import { Inject, Controller, Get, Post, Body, Query, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Inject, Controller, Get, Post, Body, Param, ParseUUIDPipe } from '@nestjs/common';
 import { ORDER_SERVICE } from '../config';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';

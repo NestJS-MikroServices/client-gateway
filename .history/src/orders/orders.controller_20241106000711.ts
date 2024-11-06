@@ -1,9 +1,14 @@
-import { Inject, Controller, Get, Post, Body, Query, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Inject, Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, NotFoundException } from '@nestjs/common';
 import { ORDER_SERVICE } from '../config';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
+import { InternalServerErrorException, NotFoundException } from '@nestjs/common';
+
+import { PaginationDto } from '../common';
+import { catchError, firstValueFrom, lastValueFrom } from 'rxjs';
 import { CreateOrderDto } from './dto';
-import { PaginationDto } from 'src/common';
+
+import { throwError } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
 @Controller('orders')
 export class OrdersController {
@@ -12,14 +17,13 @@ export class OrdersController {
   ) {}
 
   @Post()
-  createOrder( @Body() createOrderDto: CreateOrderDto ) {
+  createOrder( @Body() createOrderDto: CreateOrderDto) {
     return this.ordersClient.send('createOrder', createOrderDto);
   }
 
   @Get()
-  findAll( @Query() paginationDto: PaginationDto ){
-    return paginationDto;
-    //return this.ordersClient.send('findAllOrders', {});
+  findAllOrders(){
+    return this.ordersClient.send('findAllOrders', {});
   }
 
 /*
@@ -28,9 +32,9 @@ export class OrdersController {
     const { page, limit } = paginationDto;
     return this.ordersClient.send('findAllOrders', { page, limit });
   }*/
-
+  
   @Get(':id')
-  async findOne( @Param('id', ParseUUIDPipe ) id: string ) {
+  async findOne(@Param('id', ParseUUIDPipe ) id: string) {
     try {
         const order = await firstValueFrom(
           this.ordersClient.send('findOneOrder', { id })
@@ -51,5 +55,5 @@ export class OrdersController {
   remove(@Param('id') id: string) {
     return this.ordersClient.remove(+id);
   }
-  */
+    */
 }

@@ -1,9 +1,9 @@
-import { Inject, Controller, Get, Post, Body, Query, Param, ParseUUIDPipe } from '@nestjs/common';
+import { Inject, Controller, Get, Post, Body, Param, ParseUUIDPipe } from '@nestjs/common';
 import { ORDER_SERVICE } from '../config';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { CreateOrderDto } from './dto';
-import { PaginationDto } from 'src/common';
+import { paginatioDto } from 'src/common';
 
 @Controller('orders')
 export class OrdersController {
@@ -18,8 +18,7 @@ export class OrdersController {
 
   @Get()
   findAll( @Query() paginationDto: PaginationDto ){
-    return paginationDto;
-    //return this.ordersClient.send('findAllOrders', {});
+    return this.ordersClient.send('findAllOrders', {});
   }
 
 /*
