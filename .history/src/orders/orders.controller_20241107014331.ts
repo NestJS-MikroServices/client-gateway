@@ -28,8 +28,8 @@ export class OrdersController {
         this.ordersClient.send('findOneOrder', { id })
       );
       return order;
-    } catch (e) {
-      throw new RpcException(e);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
@@ -44,8 +44,8 @@ export class OrdersController {
         ...paginationDto,
         status: statusDto.status,
       });
-    } catch (e) {
-      throw new RpcException(e);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
@@ -55,9 +55,9 @@ export class OrdersController {
     @Body() statusDto: StatusDto,
   ) {
     try {
-      return await this.ordersClient.send('changeOrderStatus', { id, status: statusDto.status });
-    } catch (e) {
-      throw new RpcException(e);
+      return await this.ordersClient.send('changeOrderStatus', { id, status: statusDto.status }).toPromise();
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 

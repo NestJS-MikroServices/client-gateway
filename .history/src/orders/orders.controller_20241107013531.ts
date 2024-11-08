@@ -28,8 +28,8 @@ export class OrdersController {
         this.ordersClient.send('findOneOrder', { id })
       );
       return order;
-    } catch (e) {
-      throw new RpcException(e);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
@@ -44,23 +44,26 @@ export class OrdersController {
         ...paginationDto,
         status: statusDto.status,
       });
-    } catch (e) {
-      throw new RpcException(e);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
-  @Patch(':id')
-  async changeStatus(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() statusDto: StatusDto,
-  ) {
-    try {
-      return await this.ordersClient.send('changeOrderStatus', { id, status: statusDto.status });
-    } catch (e) {
-      throw new RpcException(e);
-    }
-  }
+  import { firstValueFrom } from 'rxjs';
 
+@Patch(':id')
+async changeStatus(
+  @Param('id', ParseUUIDPipe) id: string,
+  @Body() statusDto: StatusDto,
+) {
+  try {
+    return await firstValueFrom(
+      this.ordersClient.send('changeOrderStatus', { id, status: statusDto.status })
+    );
+  } catch (error) {
+    throw new RpcException(error);
+  }
+}
 
 
   /*

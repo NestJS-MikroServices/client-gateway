@@ -44,8 +44,8 @@ export class OrdersController {
         ...paginationDto,
         status: statusDto.status,
       });
-    } catch (e) {
-      throw new RpcException(e);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
@@ -56,8 +56,8 @@ export class OrdersController {
   ) {
     try {
       return await this.ordersClient.send('changeOrderStatus', { id, status: statusDto.status });
-    } catch (e) {
-      throw new RpcException(e);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
