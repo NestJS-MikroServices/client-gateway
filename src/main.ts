@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {envs} from "./config";
-import {Logger, ValidationPipe} from '@nestjs/common';
-import {RpcCustomExceptionFilter} from './common/exceptions/rpc-exception.filter';
+import { envs } from "./config";
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { RpcCustomExceptionFilter } from './common/exceptions/rpc-exception.filter';
 
 async function bootstrap() {
   const logger = new Logger('CLIENT GATEWAY');
@@ -15,7 +15,8 @@ async function bootstrap() {
     })
   );
   app.useGlobalFilters(new RpcCustomExceptionFilter())
-  await app.listen( envs.port);
+  await app.listen(envs.port);
+  console.log('SUBMODULE CLIENT-GATEWAY ON')
   logger.log(`GATEWAY OPEN ON PORT ${envs.port}`)
 }
 bootstrap();
